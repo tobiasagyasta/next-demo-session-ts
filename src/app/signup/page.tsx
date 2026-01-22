@@ -3,23 +3,15 @@
 import SignupForm from "@/components/SignupForm";
 import { SignupRequest, SignupResponse } from "@/types/user";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import axios from "axios";
 
 async function createUser(data: SignupRequest): Promise<SignupResponse> {
-  const response = await fetch("https://fakestoreapi.com/users", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
+  const response = await axios.post<SignupResponse>(
+    "https://fakestoreapi.com/users",
+    data,
+  );
 
-  //   if(response.ok){
-  //     router.push("/")
-  //   }
-  if (!response.ok) {
-    throw new Error("Failed to create user");
-  }
-
-  return response.json();
+  return response.data;
 }
 
 export default function SignupPage() {
@@ -31,8 +23,7 @@ export default function SignupPage() {
           Create an account
         </h1>
         <p className="mb-6 text-sm text-gray-600">
-          This demo posts data to the Fake Store API and shows the response
-          body.
+          This demo posts data to the Fake Store API
         </p>
         <SignupForm onSubmit={createUser} />
       </main>

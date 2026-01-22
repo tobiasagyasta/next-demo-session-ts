@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { Product } from "@/types/product";
 import Header from "@/components/Header";
 import Spinner from "@/components/Spinner";
+import axios from "axios";
 
 export default function ProductDetailsPage() {
   const params = useParams<{ number: string }>();
@@ -17,15 +18,9 @@ export default function ProductDetailsPage() {
     console.log("the params is " + params.number);
     async function loadProduct() {
       try {
-        const response = await fetch(
+        const { data } = await axios.get<Product>(
           `https://fakestoreapi.com/products/${params.number}`,
         );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch product");
-        }
-
-        const data: Product = await response.json();
         setProduct(data);
       } catch (error) {
         const message =

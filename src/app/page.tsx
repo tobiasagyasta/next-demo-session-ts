@@ -8,6 +8,7 @@ import Spinner from "@/components/Spinner";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function Home() {
   const router = useRouter();
@@ -18,13 +19,9 @@ export default function Home() {
   useEffect(() => {
     async function loadProducts() {
       try {
-        const response = await fetch("https://fakestoreapi.com/products");
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-
-        const data: Product[] = await response.json();
+        const { data } = await axios.get<Product[]>(
+          "https://fakestoreapi.com/products",
+        );
         setProducts(data);
       } catch (error) {
         const message =
@@ -40,7 +37,7 @@ export default function Home() {
 
   return (
     <>
-      <Header title="Home" showSignUp />
+      <Header title="Home" showSignUp showLogIn />
       <main className="mx-auto max-w-5xl px-4 py-8">
         <h1 className="mb-6 text-2xl font-bold sm:text-3xl">
           Fake Store Products
@@ -49,20 +46,20 @@ export default function Home() {
         {errorMessage && <p className="text-red-600">Error: {errorMessage}</p>}
         {!isLoading && !errorMessage && <ProductList products={products} />}
 
-        {/*Link method routing*/}
+        {/* Link method routing
         <button className="p-4 border rounded-3xl">
           <Link href={"/contact-form"}>To Contact</Link>
         </button>
 
         {/*Router method routing*/}
-        <button
+        {/* <button
           className="p-4 border rounded-3xl cursor-pointer"
           onClick={() => {
             router.push("/contact-form/about");
           }}
         >
           To About Contact
-        </button>
+        </button> */}
       </main>
     </>
   );
