@@ -63,22 +63,26 @@ export default function CheckoutPage() {
         {errorMessage && <p className="text-red-600">Error: {errorMessage}</p>}
         {!isLoading && !errorMessage && product && (
           <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
-            <CheckoutForm
-              productId={product.id}
-              quantity={quantity}
-              unitPrice={product.price}
-              subtotal={subtotal}
-              shipping={SHIPPING_COST}
-              tax={tax}
-              total={total}
-            />
-            <OrderSummary
-              product={product}
-              quantity={quantity}
-              shipping={SHIPPING_COST}
-              taxRate={TAX_RATE}
-              onQuantityChange={handleQuantityChange}
-            />
+            <div className="order-2 lg:order-1">
+              <CheckoutForm
+                productId={product.id}
+                quantity={quantity}
+                unitPrice={product.price}
+                subtotal={subtotal}
+                shipping={SHIPPING_COST}
+                tax={tax}
+                total={total}
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <OrderSummary
+                product={product}
+                quantity={quantity}
+                shipping={SHIPPING_COST}
+                taxRate={TAX_RATE}
+                onQuantityChange={handleQuantityChange}
+              />
+            </div>
           </div>
         )}
       </main>
