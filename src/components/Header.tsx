@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { UserToken } from "@/types/user";
+import { useRouter } from "next/navigation";
 
 type HeaderProps = {
   title: string;
   showBack?: boolean;
   showSignUp?: boolean;
   showLogIn?: boolean;
+  backHref?: string;
 };
 
 export default function Header({
@@ -16,6 +18,7 @@ export default function Header({
   showBack = false,
   showSignUp = false,
   showLogIn = false,
+  backHref = "/",
 }: HeaderProps) {
   const [userToken, setUserToken] = useState<UserToken | null>(null);
 
@@ -47,14 +50,14 @@ export default function Header({
 
   return (
     <header className="mb-6 flex items-center gap-4 py-4 border-b-2">
-      {showBack && (
+      {showBack && backHref && (
         <Link
-          href="/"
+          href={backHref}
           className="rounded-md border font-bold border-gray-200 px-3 py-1 ml-5 text-sm text-gray-700 hover:bg-gray-50"
         >
           Back
         </Link>
-      )}{" "}
+      )}
       {showSignUp && showAuthButtons && (
         <Link
           href="/signup"
