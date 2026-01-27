@@ -11,6 +11,7 @@ type HeaderProps = {
   showSignUp?: boolean;
   showLogIn?: boolean;
   backHref?: string;
+  showAbout?: boolean;
 };
 
 export default function Header({
@@ -19,6 +20,7 @@ export default function Header({
   showSignUp = false,
   showLogIn = false,
   backHref = "/",
+  showAbout = false,
 }: HeaderProps) {
   const [userToken, setUserToken] = useState<UserToken | null>(null);
 
@@ -77,6 +79,15 @@ export default function Header({
       <h1 className="text-2xl text-center mx-auto font-bold sm:text-3xl">
         {title}
       </h1>
+      {showAbout && (
+        <Link
+          href="/about"
+          className="mr-4 rounded-md border font-bold border-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-50"
+        >
+          About
+        </Link>
+      )}
+
       {userToken?.token && (
         <div className="ml-auto flex items-center gap-3 pr-4 text-sm">
           <span className="text-gray-700">Hi, {userToken.username}!</span>

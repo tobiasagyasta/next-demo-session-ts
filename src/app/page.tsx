@@ -1,4 +1,4 @@
-"use client";
+"use client"; //CSR Page
 
 import { useEffect, useState } from "react";
 import { ProductList } from "@/components/ProductList";
@@ -37,7 +37,7 @@ export default function Home() {
 
   return (
     <>
-      <Header title="Home" showSignUp showLogIn />
+      <Header title="Home" showSignUp showLogIn showAbout />
       <main className="mx-auto max-w-5xl px-4 py-8">
         <h1 className="mb-6 text-2xl font-bold sm:text-3xl">
           Fake Store Products

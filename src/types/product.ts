@@ -6,3 +6,15 @@ export type Product = {
   category: string;
   image: string;
 };
+
+export type Category = {
+  id: number;
+  name: string;
+};
+
+export type ProductPlatzi = {
+  id: number;
+  title: string;
+  category: Category;
+  images: string[];
+};
