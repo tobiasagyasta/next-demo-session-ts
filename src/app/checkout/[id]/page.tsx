@@ -21,11 +21,15 @@ export default function CheckoutPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const quantity = normalizeQuantity(searchParams.get("qty"));
+
+  const productName = searchParams.get("name");
+
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log(productName);
     async function loadProduct() {
       try {
         const { data } = await axios.get<Product>(

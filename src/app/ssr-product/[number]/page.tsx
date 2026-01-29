@@ -53,6 +53,7 @@ export default async function SsrProductDetailsPage({ params }: PageProps) {
               productId={number}
               unitPrice={product.price}
             />
+            {/* Di dalam page SSR, kita bisa import component CSR / client */}
           </div>
         )}
       </main>

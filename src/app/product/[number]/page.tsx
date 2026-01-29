@@ -60,7 +60,9 @@ export default function ProductDetailsPage() {
               <button
                 type="button"
                 onClick={() => {
-                  router.push(`/checkout/${params.number}?qty=${quantity}`);
+                  router.push(
+                    `/checkout/${params.number}?qty=${quantity}&?name=${product.title}`,
+                  );
                 }}
                 className="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800"
               >
