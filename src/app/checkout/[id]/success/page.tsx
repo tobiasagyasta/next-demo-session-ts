@@ -96,7 +96,6 @@ export default function SuccessPage() {
           </div>
         )}
       </main>
-      <Footer />
     </>
   );
 }

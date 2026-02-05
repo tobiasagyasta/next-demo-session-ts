@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { LoginRequest, LoginResponse, UserToken } from "@/types/user";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/auth.store";
 
 type LoginFormProps = {
   onSubmit: (data: LoginRequest) => Promise<LoginResponse>;
@@ -11,9 +13,9 @@ type LoginFormProps = {
 
 type FormValues = LoginRequest;
 
-const USER_TOKEN_STORAGE_KEY = "userToken";
-
 export default function LoginForm({ onSubmit }: LoginFormProps) {
+  const router = useRouter();
+  const setUserToken = useAuthStore((state) => state.setUserToken);
   const {
     register,
     handleSubmit,
@@ -28,15 +30,6 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [responseBody, setResponseBody] = useState<LoginResponse | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [userToken, setUserToken] = useState<UserToken | null>(null);
-
-  useEffect(() => {
-    if (!userToken) {
-      return;
-    }
-
-    localStorage.setItem(USER_TOKEN_STORAGE_KEY, JSON.stringify(userToken));
-  }, [userToken]);
 
   async function handleFormSubmit(values: FormValues) {
     setErrorMessage(null);
@@ -56,6 +49,9 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
       setUserToken(tokenPayload);
       setStatus("success");
       reset();
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Something went wrong";
