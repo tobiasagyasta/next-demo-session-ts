@@ -8,7 +8,8 @@ import { CheckCircle2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Spinner from "@/components/Spinner";
-import { Product } from "@/types/product";
+import { Product, ProductResponse } from "@/types/product";
+import { unwrapProductResponse } from "@/lib/product-api";
 import {
   calculateOrderTotal,
   calculateSubtotal,
@@ -29,10 +30,10 @@ export default function SuccessPage() {
   useEffect(() => {
     async function loadProduct() {
       try {
-        const { data } = await axios.get<Product>(
-          `https://fakestoreapi.com/products/${params.id}`,
+        const { data } = await axios.get<ProductResponse>(
+          `https://tobys-fakestore.up.railway.app/products/${params.id}`,
         );
-        setProduct(data);
+        setProduct(unwrapProductResponse(data));
       } catch (error) {
         const message =
           error instanceof Error ? error.message : "Something went wrong";

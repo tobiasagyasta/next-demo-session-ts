@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ProductCard } from "@/components/ProductCard";
-import { Product } from "@/types/product";
+import { Product, ProductResponse } from "@/types/product";
 import Header from "@/components/Header";
 import Spinner from "@/components/Spinner";
 import axios from "axios";
 import QuantitySelector from "@/components/QuantitySelector";
+import { unwrapProductResponse } from "@/lib/product-api";
 
 export default function ProductDetailsPage() {
   const params = useParams<{ number: string }>();
@@ -21,10 +22,10 @@ export default function ProductDetailsPage() {
     console.log("the params is " + params.number);
     async function loadProduct() {
       try {
-        const { data } = await axios.get<Product>(
-          `https://fakestoreapi.com/products/${params.number}`,
+        const { data } = await axios.get<ProductResponse>(
+          `https://tobys-fakestore.up.railway.app/products/${params.number}`,
         );
-        setProduct(data);
+        setProduct(unwrapProductResponse(data));
       } catch (error) {
         const message =
           error instanceof Error ? error.message : "Something went wrong";

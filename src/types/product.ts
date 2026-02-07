@@ -7,6 +7,21 @@ export type Product = {
   image: string;
 };
 
+export type ProductListMeta = {
+  page: number;
+  limit: number;
+  total: number;
+  pages: number;
+  has_next: boolean;
+};
+
+export type ProductListResponse = {
+  data: Product[];
+  meta: ProductListMeta;
+};
+
+export type ProductResponse = Product | { data: Product };
+
 export type Category = {
   id: number;
   name: string;

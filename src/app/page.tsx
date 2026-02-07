@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ProductList } from "@/components/ProductList";
-import { Product } from "@/types/product";
+import { Product, ProductListResponse } from "@/types/product";
 import Header from "@/components/Header";
 import Spinner from "@/components/Spinner";
 import Footer from "@/components/Footer";
@@ -19,10 +19,10 @@ export default function Home() {
   useEffect(() => {
     async function loadProducts() {
       try {
-        const { data } = await axios.get<Product[]>(
-          "https://fakestoreapi.com/products",
+        const { data } = await axios.get<ProductListResponse>(
+          "https://tobys-fakestore.up.railway.app/products",
         );
-        setProducts(data);
+        setProducts(data.data);
       } catch (error) {
         const message =
           error instanceof Error ? error.message : "Something went wrong";

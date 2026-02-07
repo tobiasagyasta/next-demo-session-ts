@@ -2,7 +2,8 @@
 import Header from "@/components/Header";
 import { ProductCard } from "@/components/ProductCard";
 import ProductDetailsActions from "@/components/ProductDetailsActions";
-import type { Product } from "@/types/product";
+import type { ProductResponse } from "@/types/product";
+import { unwrapProductResponse } from "@/lib/product-api";
 
 export const dynamic = "force-dynamic";
 
@@ -13,13 +14,17 @@ type PageProps = {
 };
 
 async function getProduct(number: string) {
-  const res = await fetch(`https://fakestoreapi.com/products/${number}`, {
-    cache: "no-store", // or "force-cache"
-    next: { revalidate: 60 }, // ISR-style
-  });
+  const res = await fetch(
+    `https://tobys-fakestore.up.railway.app/products/${number}`,
+    {
+      cache: "no-store", // or "force-cache"
+      next: { revalidate: 60 }, // ISR-style
+    },
+  );
 
   if (!res.ok) return null;
-  return (await res.json()) as Product;
+  const data = (await res.json()) as ProductResponse;
+  return unwrapProductResponse(data);
 }
 export default async function SsrProductDetailsPage({ params }: PageProps) {
   const { number } = await params;
